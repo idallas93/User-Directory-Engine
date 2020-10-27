@@ -16,8 +16,8 @@ This application is a Node CLI that takes in information about employees and gen
 
 * Below are some pictures of what the finished team page looks...
 
-![Employee Summary 1](./Assets/10-OOP-homework-demo-1.png)
-![Employee Summary 2](./Assets/10-OOP-homework-demo-2.png)
+![Employee Summary example](./Example.png)
+![Employee Summary example2](./Example2.png)
 
 
 ## App features
