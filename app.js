@@ -11,7 +11,7 @@ const employeeArray = []
 
 
 const render = require("./lib/htmlRenderer");
-
+// define base questions for all employee types
 const baseQuestion = [{
     type: 'input',
     message: 'what is your first name?',
@@ -37,35 +37,26 @@ const baseQuestion = [{
     choices: ['engineer', 'intern', 'manager']
     
 },
-
-{
-    type: 'list',
-    name: 'role',
-    message: 'what is your role?',
-    choices: ['engineer', 'intern', 'manager']
-    
-},
 ] 
 
-// function call to initialize program
+// function call to initialize questions 
 async function init() {
     try {
         // Prompt Inquirer questions
-        const response = await inquirer.prompt(questions);
+        const response = await inquirer.prompt(baseQuestion);
         switch(response.role) {
             case "engineer": 
                 engineerSelect(response)
                 break;
             case "intern": 
-                internSelect()
+                internSelect(response)
                 break;
             case "manager":
-                managerSelect()
+                managerSelect(response)
                 break
             default:
                 break;
         }
-        addEmployeePrompt()
     } catch (error) {
         console.log(error);
     }
@@ -74,24 +65,25 @@ async function init() {
 init()
 
 
-
-const newIntern = new Engineer (response.name, response.userid, response.email, response.school);
-const newManager = new Engineer (response.name, response.userid, response.email, response.officeNumber);
-
 // accumulate employee answers in an object
 
 // pass employee answer objects array into render function 
 
 // if user selects engineer when proment with role question then prompt user with engineer specific questions 
 
-const engineerSelect = (response) => {
+async function engineerSelect(response) {
     // add engineer questions
-    []
+    const engQuestion = [{
+        type: 'input',
+        message: 'What is your github username (without @)',
+        name: 'engId'
+    }]
 
     try {
     // Prompt Inquirer questions
-    const engResponse = await inquirer.prompt(questions);
+    const engResponse = await inquirer.prompt(engQuestion);
     const newEngineer = new Engineer (response.name, response.userid, response.email, engResponse.github);
+    addEmployeePrompt()
     employeeArray.push(newEngineer)
     } catch (error) {
         console.log(error);
@@ -101,25 +93,58 @@ const engineerSelect = (response) => {
 
 
 // if user selects intern when proment with role question then prompt user with intern specific questions
-const internSelect = () => {
+async function internSelect(response) {
+  // add engineer questions
+  const internQuestion = [{
+    type: 'input',
+    message: 'What is your school/ university name?',
+    name: 'school'
+}]
 
+try {
+// Prompt Inquirer questions
+const internResponse = await inquirer.prompt(internQuestion);
+const newIntern = new Intern (response.name, response.userid, response.email, internResponse.school);
+employeeArray.push(newIntern)
+} catch (error) {
+    console.log(error);
 }
 
+};
 // if user selects manager when proment with role question then prompt user with manager specific questions
-const managerSelect = () => {
+async function managerSelect(response) {
+const mgrQuestion = [{
+        type: 'input',
+        message: 'What your office number?',
+        name: 'office'
+    }]
+    try {
+    // Prompt Inquirer questions
+    const mgrResponse = await inquirer.prompt(mgrQuestion);
+    const newMgr = new Manager (response.name, response.userid, response.email, mgrResponse.office);
+    employeeArray.push(newMgr)
+    } catch (error) {
+        console.log(error);
+        }
 
 }
+// function to ask user if they want to add another employee
 async function addEmployeePrompt() {
     try {
-        // Prompt Inquirer questions
-        []
-        const additionalEmployee = await inquirer.prompt(questions)
-        if (additionalEmployee.add){
+        const addMemberQuestion =[{
+            type: 'confirm',
+            message: 'would you like to add another team member?',
+            name: 'nextEmployee'
+        }]
+
+        const additionalEmployee = await inquirer.prompt(addMemberQuestion)
+
+        if (additionalEmployee.nextEmployee){
             init()
         } else {
             render()
         }
-        employeeArray.push(newEngineer)
+        // employeeArray.push(newEngineer)
     } catch (error) {
         console.log(error);
     }
