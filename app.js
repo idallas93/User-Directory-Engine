@@ -76,7 +76,7 @@ async function engineerSelect(response) {
     const engQuestion = [{
         type: 'input',
         message: 'What is your github username (without @)',
-        name: 'engId'
+        name: 'github'
     }]
 
     try {
@@ -144,9 +144,10 @@ async function addEmployeePrompt() {
         if (additionalEmployee.nextEmployee){
             init()
         } else {
-            render()
+           let renderedHTML = render(employeeArray);
+           fs.writeFileSync('./docs/index.html', renderedHTML);
+           console.log("Great success! Your HTML team page has been generated")
         }
-        // employeeArray.push(newEngineer)
     } catch (error) {
         console.log(error);
     }
