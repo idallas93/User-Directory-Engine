@@ -2,7 +2,7 @@
 
 This application is a Node CLI that takes in information about employees and generates an HTML webpage that displays summaries for each person. This app also includes tests that are all passed. 
 
-**[Video of working application](youtube.com)**
+**[Video of working application](https://youtu.be/CNgu8uQm5dw)**
 
 
 ## Project details
